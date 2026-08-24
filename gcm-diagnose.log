@@ -1,0 +1,204 @@
+﻿Diagnose log at 2026-08-24T13:11:54Z
+
+AppPath: C:\Program Files\Git\mingw64\bin\git-credential-manager.exe
+InstallDir: C:\Program Files\Git\mingw64\bin\
+Version: 2.7.3+5fa7116896c82164996a609accd1c5ad90fe730a
+
+------------
+Diagnostic: Environment
+Skipped: False
+Success: True
+Exception: None
+Log:
+OSType: Windows
+OSVersion: 10.0 (build 26200)
+Reading environment variables... OK
+ Variables:
+OneDriveConsumer=C:\Users\wilke\OneDrive
+ProgramFiles(x86)=C:\Program Files (x86)
+MSYSTEM=MINGW64
+ProgramW6432=C:\Program Files
+windir=C:\WINDOWS
+EFC_7360_2775293581=1
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 140 Stepping 1, GenuineIntel
+TMP=C:\Users\wilke\AppData\Local\Temp
+PROCESSOR_ARCHITECTURE=AMD64
+VSCODE_GIT_ASKPASS_MAIN=c:\Users\wilke\AppData\Roaming\Code\User\globalStorage\vscode.git\askpass\70789581cae28aa7\askpass-main.js
+Path=C:/Program Files/Git/mingw64/libexec/git-core;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\wilke\bin;c:\Users\wilke\AppData\Roaming\Code\User\globalStorage\github.copilot-chat\debugCommand;c:\Users\wilke\AppData\Roaming\Code\User\globalStorage\github.copilot-chat\copilotCli;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Users\wilke\.local\bin;C:\Users\wilke\Downloads\blast-BLAST_VERSION+\bin;C:\Users\wilke\AppData\Local\Microsoft\WindowsApps;C:\Users\wilke\AppData\Local\Programs\Microsoft VS Code\bin;c:\Users\wilke\.vscode\extensions\ms-python.debugpy-2026.6.0-win32-x64\bundled\scripts\noConfigScripts
+USERPROFILE=C:\Users\wilke
+VSCODE_GIT_IPC_HANDLE=\\.\pipe\vscode-git-b6c9523865-sock
+PROCESSOR_REVISION=8c01
+TEMP=C:\Users\wilke\AppData\Local\Temp
+FPS_BROWSER_APP_PROFILE_STRING=Internet Explorer
+FPS_BROWSER_USER_PROFILE_STRING=Default
+LOGONSERVER=\\LAPTOP-WILKE
+TERM=xterm-256color
+PYDEVD_DISABLE_FILE_VALIDATION=1
+USERNAME=wilke
+EFC_7360_4126798990=1
+VSCODE_DEBUGPY_ADAPTER_ENDPOINTS=c:\Users\wilke\.vscode\extensions\ms-python.debugpy-2026.6.0-win32-x64\.noConfigDebugAdapterEndpoints\endpoint-b57743dbf3b052c3.txt
+CHROME_CRASHPAD_PIPE_NAME=\\.\pipe\crashpad_9760_EACAXAIDKLUKWORA
+GIT_EXEC_PATH=C:/Program Files/Git/mingw64/libexec/git-core
+PLINK_PROTOCOL=ssh
+OneDrive=C:\Users\wilke\OneDrive - Hubrecht Institute
+USERDOMAIN_ROAMINGPROFILE=LAPTOP-WILKE
+VSCODE_NONCE=03820a6f-d8b6-4623-980c-4c9129c5f456
+CommonProgramFiles=C:\Program Files\Common Files
+SystemDrive=C:
+EFC_7360_1592913036=1
+PYTHON_BASIC_REPL=1
+ProgramData=C:\ProgramData
+LANG=en_US.UTF-8
+GIT_ASKPASS=c:\Users\wilke\AppData\Roaming\Code\User\globalStorage\vscode.git\askpass\70789581cae28aa7\askpass.sh
+HOMEPATH=\Users\wilke
+COMPUTERNAME=LAPTOP-WILKE
+PYTHONSTARTUP=c:\Users\wilke\AppData\Roaming\Code\User\workspaceStorage\615f7756441c5b9564ace16017abefb0\ms-python.python\pythonrc.py
+VSCODE_INJECTION=1
+ALLUSERSPROFILE=C:\ProgramData
+CommonProgramW6432=C:\Program Files\Common Files
+COPILOT_DEBUG_NONCE=582c3fe4aac521948887fe6910dfcb8b
+OneDriveCommercial=C:\Users\wilke\OneDrive - Hubrecht Institute
+VSCODE_A11Y_MODE=0
+SESSIONNAME=Console
+DriverData=C:\Windows\System32\Drivers\DriverData
+HOMEDRIVE=C:
+SystemRoot=C:\WINDOWS
+GIT_TRACE2_PARENT_SID=d26820fd-eda9-4aa4-ad45-ca958b86b480
+EFC_7360_2283032206=1
+NUMBER_OF_PROCESSORS=8
+OS=Windows_NT
+EFC_7360_3789132940=1
+ZES_ENABLE_SYSMAN=1
+ProgramFiles=C:\Program Files
+ComSpec=C:\WINDOWS\system32\cmd.exe
+VSCODE_STABLE=1
+PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.CPL
+HOME=C:\Users\wilke
+PSModulePath=C:\Users\wilke\OneDrive\Documenten\WindowsPowerShell\Modules;C:\Program Files\WindowsPowerShell\Modules;C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules
+TMPDIR=C:\Users\wilke\AppData\Local\Temp
+APPDATA=C:\Users\wilke\AppData\Roaming
+USERDOMAIN=LAPTOP-WILKE
+PROCESSOR_LEVEL=6
+LOCALAPPDATA=C:\Users\wilke\AppData\Local
+VSCODE_GIT_ASKPASS_NODE=C:\Users\wilke\AppData\Local\Programs\Microsoft VS Code\Code.exe
+BUNDLED_DEBUGPY_PATH=c:\Users\wilke\.vscode\extensions\ms-python.debugpy-2026.6.0-win32-x64\bundled\libs\debugpy
+TERM_PROGRAM_VERSION=1.133.0
+EFC_7360_1262719628=1
+CommonProgramFiles(x86)=C:\Program Files (x86)\Common Files
+COLORTERM=truecolor
+PUBLIC=C:\Users\Public
+TERM_PROGRAM=vscode
+VSCODE_GIT_ASKPASS_EXTRA_ARGS=
+
+
+------------
+Diagnostic: File system
+Skipped: False
+Success: True
+Exception: None
+Log:
+Temporary directory is 'C:\Users\wilke\AppData\Local\Temp\'...
+Checking basic file I/O...
+Writing to temporary file 'C:\Users\wilke\AppData\Local\Temp\fb1d4bc288669147f7957704'... OK
+Reading from temporary file 'C:\Users\wilke\AppData\Local\Temp\fb1d4bc288669147f7957704'... OK
+Deleting temporary file 'C:\Users\wilke\AppData\Local\Temp\fb1d4bc288669147f7957704'... OK
+Testing IFileSystem instance...
+UserHomePath: C:\Users\wilke
+UserDataDirectoryPath: C:\Users\wilke\.gcm
+GetCurrentDirectory(): C:\dev\proteome-ui
+
+------------
+Diagnostic: Networking
+Skipped: False
+Success: True
+Exception: None
+Log:
+Checking networking and HTTP stack...
+Creating HTTP client... OK
+IsNetworkAvailable: True
+Sending HEAD request to http://example.com...Sending HEAD request to https://example.com... OK
+ OK
+Acquiring free TCP port... OK
+Testing local HTTP loopback connections...
+Creating new HTTP listener for http://localhost:55430/... OK
+Waiting for loopback connection... OK
+Writing response... OK
+Waiting for response data... OK
+Loopback connection data OK
+
+------------
+Diagnostic: Git
+Skipped: False
+Success: True
+Exception: None
+Log:
+Getting Git version... OK
+Git version is '2.54.0.windows.1'
+Locating current repository...Git repository at 'C:/dev/proteome-ui/.git'
+ OK
+Listing all Git configuration... OK
+Git configuration:
+file:C:/Program Files/Git/etc/gitconfig	diff.astextplain.textconv=astextplain
+file:C:/Program Files/Git/etc/gitconfig	filter.lfs.clean=git-lfs clean -- %f
+file:C:/Program Files/Git/etc/gitconfig	filter.lfs.smudge=git-lfs smudge -- %f
+file:C:/Program Files/Git/etc/gitconfig	filter.lfs.process=git-lfs filter-process
+file:C:/Program Files/Git/etc/gitconfig	filter.lfs.required=true
+file:C:/Program Files/Git/etc/gitconfig	http.sslbackend=schannel
+file:C:/Program Files/Git/etc/gitconfig	core.autocrlf=true
+file:C:/Program Files/Git/etc/gitconfig	core.fscache=true
+file:C:/Program Files/Git/etc/gitconfig	core.symlinks=false
+file:C:/Program Files/Git/etc/gitconfig	pull.rebase=false
+file:C:/Program Files/Git/etc/gitconfig	credential.helper=manager
+file:C:/Program Files/Git/etc/gitconfig	credential.https://dev.azure.com.usehttppath=true
+file:C:/Program Files/Git/etc/gitconfig	init.defaultbranch=master
+file:C:/Users/wilke/.gitconfig	user.name=MeijerW
+file:C:/Users/wilke/.gitconfig	user.email=meijer.whm@gmail.com
+file:C:/Users/wilke/.gitconfig	credential.helper=manager
+file:.git/config	core.repositoryformatversion=0
+file:.git/config	core.filemode=false
+file:.git/config	core.bare=false
+file:.git/config	core.logallrefupdates=true
+file:.git/config	core.symlinks=false
+file:.git/config	core.ignorecase=true
+file:.git/config	remote.origin.url=https://github.com/MeijerW/proteome-ui.git
+file:.git/config	remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
+file:.git/config	branch.main.remote=origin
+file:.git/config	branch.main.merge=refs/heads/main
+file:.git/config	branch.main.vscode-merge-base=origin/main
+
+
+------------
+Diagnostic: Credential storage
+Skipped: False
+Success: True
+Exception: None
+Log:
+ICredentialStore instance is of type: CredentialStore
+Writing test credential... OK
+Reading test credential... OK
+Deleting test credential... OK
+
+------------
+Diagnostic: Microsoft authentication (AAD/MSA)
+Skipped: False
+Success: True
+Exception: None
+Log:
+Broker is not enabled.
+Flow type is: Auto
+Gathering MSAL token cache data... OK
+CacheDirectory: C:\Users\wilke\AppData\Local\.IdentityService
+CacheFileName: msal.cache
+CacheFilePath: C:\Users\wilke\AppData\Local\.IdentityService\msal.cache
+Creating cache helper... OK
+Verifying MSAL token cache persistence... OK
+
+------------
+Diagnostic: GitHub API
+Skipped: False
+Success: True
+Exception: None
+Log:
+Using 'https://github.com/' as API target.
+Querying '/meta' endpoint... OK
+
