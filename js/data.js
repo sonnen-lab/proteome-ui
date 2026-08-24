@@ -1,5 +1,7 @@
-const BASE =
-"https://raw.githubusercontent.com/MeijerW/Meijer-proteomics-data/main/Datafiles/"
+const BASE_CANDIDATES = [
+    "https://raw.githubusercontent.com/MeijerW/Meijer-proteomics-data-main/main/Datafiles/",
+    "https://raw.githubusercontent.com/MeijerW/Meijer-proteomics-data/main/Datafiles/"
+]
 
 let RNA_DATA = []
 let PROT_DATA = []
@@ -90,12 +92,14 @@ async function fetchFirstAvailable(candidates, label, required = true){
     let lastStatus = "";
 
     for(const fileName of list){
-        const response = await fetch(BASE + fileName);
-        if(response.ok){
-            const text = await response.text();
-            return {text, fileName};
+        for(const base of BASE_CANDIDATES){
+            const response = await fetch(base + fileName);
+            if(response.ok){
+                const text = await response.text();
+                return {text, fileName};
+            }
+            lastStatus = `${base} -> HTTP ${response.status}`;
         }
-        lastStatus = `HTTP ${response.status}`;
     }
 
     if(required){
@@ -210,6 +214,20 @@ function parseSpatialCsv(text){
     }));
 }
 
+function parseTimeAndReplicateFromSample(sampleValue){
+    const sample = String(sampleValue || "").trim();
+    const match = sample.match(/TP_(\d+)_REP_(\d+)/i);
+    if(!match){
+        return {time: null, replicate: null};
+    }
+    const time = Number(match[1]);
+    const replicate = Number(match[2]);
+    return {
+        time: Number.isNaN(time) ? null : time,
+        replicate: Number.isNaN(replicate) ? null : replicate
+    };
+}
+
 async function loadData(){
 
 // Load alias mappings first (optional, but enables flexible gene lookup)
@@ -233,18 +251,18 @@ const deFile = await fetchFirstAvailable(SPATIAL_DATASETS.DE_LIST, "DE gene list
 const deText = deFile.text
 DIFFERENTIALLY_EXPRESSED_GENES = parseDifferentialGeneList(deText)
 
-// Load spatiotemporal data from TSV and add
+// Load spatiotemporal data from long-format CSV and add
 const rnaFiles = [
     {
-        urls: ["A_RNASeq_log2_tranformed_cleaned_harmonized_20260528.tsv"],
+        urls: ["A_RNAseq_long_filtered.csv"],
         region: "a-psm"
     },
     {
-        urls: ["P_RNASeq_log2_tranformed_cleaned_harmonized_20260528.tsv"],
+        urls: ["P_RNAseq_long_filtered.csv"],
         region: "p-psm"
     },
     {
-        urls: ["S_RNASeq_log2_tranformed_cleaned_harmonized_20260528.tsv"],
+        urls: ["S_RNAseq_long_filtered.csv"],
         region: "Somite"
     }
 ]
@@ -255,35 +273,32 @@ for (const file of rnaFiles) {
     const data = Papa.parse(text, {
         header: true,
         dynamicTyping: true,
-        skipEmptyLines: true,
-        delimiter: '\t'
+        skipEmptyLines: true
     }).data
-    // Pivot to long format (include all replicates per timepoint)
-    const times = [30, 60, 90, 120];
     data.forEach(row => {
-        times.forEach(time => {
-            const repKeys = Object.keys(row).filter(k => k.startsWith(`TP_${time}_REP_`));
-            repKeys.forEach(key => {
-                const value = row[key];
-                if (value !== undefined && value !== null) {
-                    RNA_DATA.push({
-                        ID: resolveGeneAlias(row.ID || row.Gene || row.gene),
-                        region: file.region,
-                        group: file.region,
-                        time: time,
-                        sample: key,
-                        value: value,
-                        P_VALUE: row.P_VALUE,
-                        Q_VALUE: row.Q_VALUE,
-                        PERIOD: row.PERIOD,
-                        LAG: row.LAG,
-                        AMPLITUDE: row.AMPLITUDE,
-                        OFFSET: row.OFFSET,
-                        MEAN_PERIODICITY: row.MEAN_PERIODICITY,
-                        SCATTER: row.SCATTER
-                    });
-                }
-            });
+        const sample = row.sample || row.Sample || null;
+        const value = row.value ?? row.VALUE;
+        if(value === undefined || value === null || sample === null) return;
+
+        const parsed = parseTimeAndReplicateFromSample(sample);
+        const group = row.group || row.Group || file.region;
+
+        RNA_DATA.push({
+            ID: resolveGeneAlias(row.ID || row.Gene || row.gene),
+            region: file.region,
+            group: group,
+            time: parsed.time,
+            sample: sample,
+            replicate: parsed.replicate,
+            value: value,
+            P_VALUE: row.P_VALUE,
+            Q_VALUE: row.Q_VALUE,
+            PERIOD: row.PERIOD,
+            LAG: row.LAG,
+            AMPLITUDE: row.AMPLITUDE,
+            OFFSET: row.OFFSET,
+            MEAN_PERIODICITY: row.MEAN_PERIODICITY,
+            SCATTER: row.SCATTER
         });
     });
 }
@@ -291,15 +306,15 @@ for (const file of rnaFiles) {
 // Protein files
 const protFiles = [
     {
-        urls: ["A_Proteomics_spatialtemporal_depA_norm_cleaned_harmonized_20260528.tsv"],
+        urls: ["A_proteomics_long_filtered.csv"],
         region: "a-psm"
     },
     {
-        urls: ["P_Proteomics_spatialtemporal_depP_norm_cleaned_harmonized_20260528.tsv"],
+        urls: ["P_proteomics_long_filtered.csv"],
         region: "p-psm"
     },
     {
-        urls: ["S_Proteomics_spatialtemporal_depS_norm_cleaned_harmonized_20260528.tsv"],
+        urls: ["S_proteomics_long_filtered.csv"],
         region: "Somite"
     }
 ]
@@ -310,35 +325,32 @@ for (const file of protFiles) {
     const data = Papa.parse(text, {
         header: true,
         dynamicTyping: true,
-        skipEmptyLines: true,
-        delimiter: '\t'
+        skipEmptyLines: true
     }).data
-    // Pivot to long format (include all replicates per timepoint)
-    const times = [30, 60, 90, 120];
     data.forEach(row => {
-        times.forEach(time => {
-            const repKeys = Object.keys(row).filter(k => k.startsWith(`TP_${time}_REP_`));
-            repKeys.forEach(key => {
-                const value = row[key];
-                if (value !== undefined && value !== null) {
-                    PROT_DATA.push({
-                        ID: resolveGeneAlias(row.ID || row.Gene || row.gene),
-                        region: file.region,
-                        group: file.region,
-                        time: time,
-                        sample: key,
-                        value: value,
-                        P_VALUE: row.P_VALUE,
-                        Q_VALUE: row.Q_VALUE,
-                        PERIOD: row.PERIOD,
-                        LAG: row.LAG,
-                        AMPLITUDE: row.AMPLITUDE,
-                        OFFSET: row.OFFSET,
-                        MEAN_PERIODICITY: row.MEAN_PERIODICITY,
-                        SCATTER: row.SCATTER
-                    });
-                }
-            });
+        const sample = row.sample || row.Sample || null;
+        const value = row.value ?? row.VALUE;
+        if(value === undefined || value === null || sample === null) return;
+
+        const parsed = parseTimeAndReplicateFromSample(sample);
+        const group = row.group || row.Group || file.region;
+
+        PROT_DATA.push({
+            ID: resolveGeneAlias(row.ID || row.Gene || row.gene),
+            region: file.region,
+            group: group,
+            time: parsed.time,
+            sample: sample,
+            replicate: parsed.replicate,
+            value: value,
+            P_VALUE: row.P_VALUE,
+            Q_VALUE: row.Q_VALUE,
+            PERIOD: row.PERIOD,
+            LAG: row.LAG,
+            AMPLITUDE: row.AMPLITUDE,
+            OFFSET: row.OFFSET,
+            MEAN_PERIODICITY: row.MEAN_PERIODICITY,
+            SCATTER: row.SCATTER
         });
     });
 }
