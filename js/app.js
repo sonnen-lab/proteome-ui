@@ -298,6 +298,22 @@ function setupTemporalSineFitAutoReplot(){
   });
 }
 
+function setTemporalPlotControlsReady(ready){
+  const temporalActionIds = [
+    'temporalSinglePlotBtn',
+    'temporalHeatmapPlotBtn',
+    'goTemporalGenerateBtn',
+    'explorerTemporalPlotBtn'
+  ];
+
+  temporalActionIds.forEach(id => {
+    const button = document.getElementById(id);
+    if(!button) return;
+    button.disabled = !ready;
+    button.title = ready ? '' : 'Data is still loading';
+  });
+}
+
 function setupExplorerPreviewBindings(){
   const controls = [
     'explorerSpatialRhoBand',
@@ -338,7 +354,11 @@ function setupExplorerPreviewBindings(){
     cb.addEventListener('change', triggerUpdate);
   });
 
-  document.addEventListener('proteomeDataLoaded', triggerUpdate);
+  setTemporalPlotControlsReady(false);
+  document.addEventListener('proteomeDataLoaded', () => {
+    setTemporalPlotControlsReady(true);
+    triggerUpdate();
+  });
   document.addEventListener('explorerBenchmarkReady', triggerUpdate);
   triggerUpdate();
 }

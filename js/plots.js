@@ -221,6 +221,32 @@ function restorePlotStateForView(viewKey){
     }
 }
 
+// Looks up a gene's rows in RNA_DATA/PROT_DATA for a region. If one dataset has
+// no name match, tries the other dataset's Ensembl ID to find the matching gene name.
+function getMatchedTemporalRows(gene, regionLower){
+    const geneLower = String(gene).toLowerCase();
+    const regionMatch = (row) => row.time >= 0 && (!regionLower || (row.region && row.region.toLowerCase() === regionLower));
+
+    let rnaGene = RNA_DATA.filter(d => d.ID && String(d.ID).toLowerCase() === geneLower && regionMatch(d));
+    let protGene = PROT_DATA.filter(d => d.ID && String(d.ID).toLowerCase() === geneLower && regionMatch(d));
+
+    if(typeof window.resolveMatchedGene !== "function") return {rnaGene, protGene};
+
+    if(rnaGene.length > 0 && protGene.length === 0){
+        const matchedProteinGene = window.resolveMatchedGene(gene, "RNA", "PROTEIN");
+        if(matchedProteinGene && matchedProteinGene.toLowerCase() !== geneLower){
+            protGene = PROT_DATA.filter(d => d.ID && String(d.ID).toLowerCase() === matchedProteinGene.toLowerCase() && regionMatch(d));
+        }
+    } else if(protGene.length > 0 && rnaGene.length === 0){
+        const matchedRnaGene = window.resolveMatchedGene(gene, "PROTEIN", "RNA");
+        if(matchedRnaGene && matchedRnaGene.toLowerCase() !== geneLower){
+            rnaGene = RNA_DATA.filter(d => d.ID && String(d.ID).toLowerCase() === matchedRnaGene.toLowerCase() && regionMatch(d));
+        }
+    }
+
+    return {rnaGene, protGene};
+}
+
 function getSpatialCorrelationEntry(gene){
     if(!gene || typeof RHO_CORRELATION_DATA === "undefined" || !(RHO_CORRELATION_DATA instanceof Map)) return null;
     const trimmed = String(gene).trim();
@@ -1010,6 +1036,10 @@ function formatBiocycleStatValue(value){
 }
 
 function plotTemporal(){
+    if(typeof window.proteomeDataReady !== "undefined" && !window.proteomeDataReady){
+        alert("Data is still loading. Please wait a moment and try again.");
+        return;
+    }
     if(RNA_DATA.length === 0 || PROT_DATA.length === 0){
         alert("Data is still loading. Please wait a moment and try again.");
         return;
@@ -1023,8 +1053,9 @@ function plotTemporal(){
     const regions = ["p-psm", "a-psm", "Somite"];
     const regionPanels = regions.map(region => {
         const regionLower = region.toLowerCase();
-        const rnaGene = RNA_DATA.filter(d => d.ID && String(d.ID).toLowerCase() === gene && d.region && d.region.toLowerCase() === regionLower && d.time >= 0);
-        const protGene = PROT_DATA.filter(d => d.ID && String(d.ID).toLowerCase() === gene && d.region && d.region.toLowerCase() === regionLower && d.time >= 0);
+        const matched = getMatchedTemporalRows(gene, regionLower);
+        const rnaGene = matched.rnaGene;
+        const protGene = matched.protGene;
         return {region, rnaGene, protGene};
     });
 
@@ -2382,6 +2413,10 @@ function updateTemporalExplorerPreview(){
 }
 
 async function plotExplorerTemporalHeatmap(){
+    if(window.proteomeDataReady === false){
+        alert("Data is still loading. Please wait a moment and try again.");
+        return;
+    }
     if(RNA_DATA.length === 0 || PROT_DATA.length === 0){
         alert("Data is still loading. Please wait a moment and try again.");
         setExplorerStatus("explorerTemporalStatus", "Data is still loading. Please wait and try again.");
@@ -2696,6 +2731,10 @@ async function plotGoSpatialHeatmap(){
 }
 
 async function plotGoTemporalHeatmap(){
+    if(window.proteomeDataReady === false){
+        alert("Data is still loading. Please wait a moment and try again.");
+        return;
+    }
     const goInfo = getGoTermInfoFromInput(document.getElementById('goTermInputTemporal').value);
     const goId = goInfo.goId;
     if(!goId){
@@ -2808,8 +2847,9 @@ function renderTemporalHeatmapFromGenes(inputGenes, region, optionsOverride = nu
 
     const entries = [];
     genes.forEach(gene => {
-        const rnaGene = RNA_DATA.filter(d => d.ID && String(d.ID).toLowerCase() === gene && d.region && d.region.toLowerCase() === region.toLowerCase() && d.time >= 0);
-        const protGene = PROT_DATA.filter(d => d.ID && String(d.ID).toLowerCase() === gene && d.region && d.region.toLowerCase() === region.toLowerCase() && d.time >= 0);
+        const matched = getMatchedTemporalRows(gene, region.toLowerCase());
+        const rnaGene = matched.rnaGene;
+        const protGene = matched.protGene;
         const hasRna = rnaGene.length > 0;
         const hasProt = protGene.length > 0;
         if(!hasRna && !hasProt) return;
@@ -3235,6 +3275,10 @@ function renderTemporalHeatmapFromGenes(inputGenes, region, optionsOverride = nu
 }
 
 function plotTemporalHeatmap(overrideGenes, regionOverride, optionsOverride = null){
+    if(typeof window.proteomeDataReady !== "undefined" && !window.proteomeDataReady){
+        alert("Data is still loading. Please wait a moment and try again.");
+        return;
+    }
     const genes = Array.isArray(overrideGenes)
         ? overrideGenes
         : document.getElementById("temporalGenes").value;
