@@ -1,6 +1,5 @@
 const BASE_CANDIDATES = [
-    "https://raw.githubusercontent.com/MeijerW/Meijer-proteomics-data-main/main/Datafiles/",
-    "https://raw.githubusercontent.com/MeijerW/Meijer-proteomics-data/main/Datafiles/"
+    "https://raw.githubusercontent.com/sonnen-lab/Meijer-proteomics-data/main/Datafiles/"
 ]
 
 let RNA_DATA = []
