@@ -1,4 +1,5 @@
 const VIEW_PLOT_STATE = {};
+const FIGURE_CITATION = "Meijer et al. (2026). Nature Communications. doi: 10.1038/s41467-026-78911-0";
 let CURRENT_PLOT_METADATA = {
     modality: "plot",
     view: "general",
@@ -99,6 +100,23 @@ function buildResponsiveLayout(layout, options = {}){
     const {heightMode = "adaptive"} = options;
     delete next.width;
     next.autosize = true;
+    next.margin = {...(next.margin || {})};
+    next.margin.b = Math.max(Number(next.margin.b) || 0, 85);
+    next.annotations = [
+        ...(Array.isArray(next.annotations) ? next.annotations : []),
+        {
+            text: FIGURE_CITATION,
+            x: 0,
+            y: -0.16,
+            xref: "paper",
+            yref: "paper",
+            xanchor: "left",
+            yanchor: "top",
+            showarrow: false,
+            font: {size: 10, color: "#444444"},
+            align: "left"
+        }
+    ];
 
     if(heightMode === "single-gene"){
         const viewportHeight = window.innerHeight || 900;

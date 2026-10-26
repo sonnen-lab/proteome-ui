@@ -1105,6 +1105,12 @@ footer {
     font-size: 0.88rem;
 }
 
+.home-footer .site-citation {
+    max-width: 760px;
+    line-height: 1.5;
+    text-align: center;
+}
+
 .home-footer a {
     color: #ffffff;
     text-decoration: underline;
